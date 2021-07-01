@@ -1,0 +1,18 @@
+[package]
+name = "cloud-cnc-bot/no-op"
+version = "1.0.0"
+description = "No-operation WAPM test package"
+license = "MIT"
+repository = "https://github.com/Cloud-CNC/wapm-publish.git"
+
+[[module]]
+name = "no-op"
+source = "no-op.wasm"
+abi = "wasi"
+
+[module.interfaces]
+wasi = "0.0.0-unstable"
+
+[[command]]
+name = "no-op"
+module = "no-op"

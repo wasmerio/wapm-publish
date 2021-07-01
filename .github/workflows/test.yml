@@ -1,0 +1,36 @@
+# Test the action
+
+name: Tests
+
+on:
+  # Run tests when pushed
+  push:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout source code
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      # Build the Docker image
+      - name: Build the Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: .github/workflows/test.dockerfile
+          push: false
+          tags: cloud-cnc/wapm-publish
+
+      # Run the Docker image
+      - name: Run the Docker image
+        uses: addnab/docker-run-action@v3
+        with:
+          image: cloud-cnc/wapm-publish
+          options: -e WAPM_USERNAME -e WAPM_PASSWORD
+          run: npm run test
+        env:
+          WAPM_USERNAME: ${{ secrets.WAPM_USERNAME }}
+          WAPM_PASSWORD: ${{ secrets.WAPM_PASSWORD }}

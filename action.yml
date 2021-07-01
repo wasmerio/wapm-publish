@@ -1,0 +1,19 @@
+name: WAPM Publish
+description: 'Publish to WAPM: the Web Assembly package manager'
+author: Cloud-CNC
+branding:
+  color: purple
+  icon: package
+runs:
+  using: node12
+  main: dist/index.js
+inputs:
+  username:
+    description: WAPM account username
+    required: true
+  password:
+    description: WAPM account password
+    required: true
+  directory:
+    description: Package directory (Defaults to the current working directory)
+    required: false
