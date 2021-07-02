@@ -3,7 +3,7 @@
  */
 
 //Imports
-import client from './apollo';
+import { Client } from './apollo';
 import {LoginDocument} from './graphql';
 import {debug, setFailed, setSecret} from '@actions/core';
 import {exec} from '@actions/exec';
@@ -57,7 +57,7 @@ export const getLocation = async () =>
  * @param username WAPM username
  * @param password WAPM password
  */
-export const login = async (username: string, password: string) =>
+export const login = async (client: Client, username: string, password: string) =>
 {
   //Authenticate to WAPM
   const {data} = await client.mutate({
@@ -86,6 +86,58 @@ export const login = async (username: string, password: string) =>
     //Crash
     process.exit(1);
   }
+};
+
+/**
+ * Set WAPM Registry url
+ * @param url WAPM registry url
+ */
+export const setRegistryUrl = async (url: string) =>
+{
+  //Update the registry url
+  const exitCode = await exec('wapm', ['config', 'set', 'registry.url', url]);
+
+  //Ensure the child was successful
+  if (exitCode != 0)
+  {
+    //Fail the step
+    setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
+
+    //Crash
+    process.exit(1);
+  }
+};
+
+
+/**
+ * Get WAPM Registry url
+ */
+export const getRegistryUrl = async (): Promise<string> =>
+{
+  let registryUrl = '';
+
+  const options = {
+    listeners: {
+      stdout: (data: Buffer) => {
+        registryUrl += data.toString();
+      },
+    }
+  };
+
+  //Get the registry url
+  const exitCode = await exec('wapm', ['config', 'get', 'registry.url'], options);
+
+  //Ensure the child was successful
+  if (exitCode != 0)
+  {
+    //Fail the step
+    setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
+
+    //Crash
+    process.exit(1);
+  }
+  
+  return registryUrl;
 };
 
 /**
