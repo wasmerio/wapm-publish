@@ -32,5 +32,5 @@ jobs:
           options: -e WAPM_USERNAME -e WAPM_PASSWORD
           run: npm run test
         env:
-          WAPM_USERNAME: ${{ secrets.WAPM_USERNAME }}
-          WAPM_PASSWORD: ${{ secrets.WAPM_PASSWORD }}
+          WAPM_USERNAME: ${{ secrets.WAPM_DEV_USERNAME }}
+          WAPM_PASSWORD: ${{ secrets.WAPM_DEV_PASSWORD }}

@@ -5,12 +5,33 @@
 //Imports
 import test from 'ava';
 import {existsSync} from 'fs';
-import {getLocation, login, publish} from './wapm';
+import {getClient} from './apollo';
+import {getLocation, getRegistryUrl, login, publish, setRegistryUrl} from './wapm';
 import {loadEnv, loggedIn, logout, resolveFixture} from './test-utilities';
 
 //Environment variables
 const username = loadEnv('WAPM_USERNAME');
 const password = loadEnv('WAPM_PASSWORD');
+// We test on the dev registry by default
+const registry = process.env['WAPM_REGISTRY'] || "https://registry.wapm.dev";
+
+let defaultRegistry: string;
+test.before(async t => {
+  // Get the default global registry url
+  defaultRegistry = await getRegistryUrl();
+});
+test.beforeEach(async t => {
+  // Overwrite the global registry url before each test
+  await setRegistryUrl(registry);
+});
+test.afterEach(async t => {
+  // Overwrite the global registry url in case the test changed the default
+  await setRegistryUrl(registry);
+});
+test.after(async t => {
+  // Reset the global registry url
+  await setRegistryUrl(defaultRegistry);
+});
 
 test('will get Wasmer config location', async ctx =>
 {
@@ -21,6 +42,19 @@ test('will get Wasmer config location', async ctx =>
   ctx.true(existsSync(location));
 });
 
+test.serial('registry url', async ctx =>
+{
+  //Assert that it will not throw an error
+  await ctx.notThrowsAsync(async () =>
+  {
+    const temp_registry_url = "https://myregistry.wapm.io";
+    await setRegistryUrl(temp_registry_url);
+
+    let registryUrl = await getRegistryUrl();
+    ctx.assert(registryUrl.startsWith(temp_registry_url), "The registry.url set and get don't match");
+  });
+});
+
 test('will login', async ctx =>
 {
   //Logout
@@ -29,8 +63,9 @@ test('will login', async ctx =>
   //Assert that it will not throw an error
   await ctx.notThrowsAsync(async () =>
   {
+    const client = getClient(registry);
     //Login
-    await login(username, password);
+    await login(client, username, password);
   });
 
   //Assert that we're logged in
@@ -43,7 +78,8 @@ test('will login', async ctx =>
 test('will publish', async ctx =>
 {
   //Login
-  await login(username, password);
+  const client = getClient(registry);
+  await login(client, username, password);
 
   //Get the fixture
   const fixture = resolveFixture();
