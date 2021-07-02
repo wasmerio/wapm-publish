@@ -1,6 +1,6 @@
 name: WAPM Publish
 description: 'Publish to WAPM: the Web Assembly package manager'
-author: Cloud-CNC
+author: Wasmer
 branding:
   color: purple
   icon: package

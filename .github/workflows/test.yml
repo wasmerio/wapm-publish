@@ -22,13 +22,13 @@ jobs:
           context: .
           file: .github/workflows/test.dockerfile
           push: false
-          tags: cloud-cnc/wapm-publish
+          tags: wasmer/wapm-publish
 
       # Run the Docker image
       - name: Run the Docker image
         uses: addnab/docker-run-action@v3
         with:
-          image: cloud-cnc/wapm-publish
+          image: wasmer/wapm-publish
           options: -e WAPM_USERNAME -e WAPM_PASSWORD
           run: npm run test
         env:

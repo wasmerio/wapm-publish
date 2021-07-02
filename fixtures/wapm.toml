@@ -1,9 +1,9 @@
 [package]
-name = "cloud-cnc-bot/no-op"
+name = "no-op"
 version = "1.0.0"
 description = "No-operation WAPM test package"
 license = "MIT"
-repository = "https://github.com/Cloud-CNC/wapm-publish.git"
+repository = "https://github.com/wasmer/wapm-publish.git"
 
 [[module]]
 name = "no-op"
