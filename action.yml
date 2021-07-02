@@ -17,3 +17,7 @@ inputs:
   directory:
     description: Package directory (Defaults to the current working directory)
     required: false
+  registry:
+    description: The registry url (defaults to https://registry.wapm.io/)
+    default: https://registry.wapm.io
+    required: false

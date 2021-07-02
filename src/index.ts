@@ -26,10 +26,11 @@ const main = async () =>
   setSecret(username);
   setSecret(password);
 
+  //Get the Apollo client
   if (registry) {
     await setRegistryUrl(registry);
   }
-  const client = getClient(registry || "https://registry.wapm.io");
+  const client = getClient(registry);
 
   //Login to WAPM
   await login(client, username, password);
@@ -37,7 +38,6 @@ const main = async () =>
 
   //Publish to WAPM
   await publish(directory);
-
   info(`Published the package located in ${directory}.`);
 
   //Exit
