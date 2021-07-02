@@ -1,5 +1,5 @@
 name: WAPM Publish
-description: 'Publish to WAPM: the Web Assembly package manager'
+description: 'Publish to WAPM: the WebAssembly Package Manager'
 author: Wasmer
 branding:
   color: purple
