@@ -32,10 +32,142 @@ export type Scalars = {
 
 
 
+export type AcceptNamespaceCollaboratorInviteInput = {
+  inviteId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type AcceptPackageCollaboratorInviteInput = {
+  inviteId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type AcceptPackageTransferRequestInput = {
+  packageTransferRequestId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+
+
+
+export type ArchivePackageInput = {
+  packageId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type ChangePackageVersionArchivedStatusInput = {
+  packageVersionId: Scalars['ID'];
+  isArchived?: Maybe<Scalars['Boolean']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type ChangeUserEmailInput = {
+  newEmail: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type ChangeUserPasswordInput = {
+  /** The token associated to change the password. If not existing it will use the request user by default */
+  token?: Maybe<Scalars['String']>;
+  oldPassword?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type ChangeUserUsernameInput = {
+  /** The new user username */
+  username: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type CheckUserExistsInput = {
+  /** The user */
+  user: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+
+
+
+export type CreateNamespaceInput = {
+  name: Scalars['String'];
+  /** The namespace display name */
+  displayName?: Maybe<Scalars['String']>;
+  /** The namespace description */
+  description?: Maybe<Scalars['String']>;
+  /** The namespace avatar */
+  avatar?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+export type DeleteNamespaceInput = {
+  namespaceId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+export type GenerateApiTokenInput = {
+  identifier?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+
+
 export type InputSignature = {
   publicKeyKeyId: Scalars['String'];
   data: Scalars['String'];
 };
+
+
+
+
+
+export type InviteNamespaceCollaboratorInput = {
+  namespaceId: Scalars['ID'];
+  role: Role;
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type InvitePackageCollaboratorInput = {
+  packageName: Scalars['String'];
+  role: Role;
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type LikePackageInput = {
+  packageId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -61,6 +193,16 @@ export type ObtainJsonWebTokenInput = {
 
 
 
+
+
+
+
+
+
+
+
+
+
 export type PublishPackageInput = {
   name: Scalars['String'];
   version: Scalars['String'];
@@ -73,6 +215,8 @@ export type PublishPackageInput = {
   homepage?: Maybe<Scalars['String']>;
   file?: Maybe<Scalars['String']>;
   signature?: Maybe<InputSignature>;
+  /** The package icon */
+  icon?: Maybe<Scalars['String']>;
   clientMutationId?: Maybe<Scalars['String']>;
 };
 
@@ -86,8 +230,8 @@ export type PublishPublicKeyInput = {
 
 
 
-export type RefreshInput = {
-  refreshToken: Scalars['String'];
+export type ReadNotificationInput = {
+  notificationId: Scalars['ID'];
   clientMutationId?: Maybe<Scalars['String']>;
 };
 
@@ -101,13 +245,256 @@ export type RegisterUserInput = {
 };
 
 
+/** An enumeration. */
+export enum RegistryNamespaceMaintainerInviteRoleChoices {
+  /** Admin */
+  Admin = 'ADMIN',
+  /** Editor */
+  Editor = 'EDITOR',
+  /** Viewer */
+  Viewer = 'VIEWER'
+}
+
+/** An enumeration. */
+export enum RegistryNamespaceMaintainerRoleChoices {
+  /** Admin */
+  Admin = 'ADMIN',
+  /** Editor */
+  Editor = 'EDITOR',
+  /** Viewer */
+  Viewer = 'VIEWER'
+}
+
+/** An enumeration. */
+export enum RegistryPackageMaintainerInviteRoleChoices {
+  /** Admin */
+  Admin = 'ADMIN',
+  /** Editor */
+  Editor = 'EDITOR',
+  /** Viewer */
+  Viewer = 'VIEWER'
+}
+
+/** An enumeration. */
+export enum RegistryPackageMaintainerRoleChoices {
+  /** Admin */
+  Admin = 'ADMIN',
+  /** Editor */
+  Editor = 'EDITOR',
+  /** Viewer */
+  Viewer = 'VIEWER'
+}
+
+export type RemoveNamespaceCollaboratorInput = {
+  namespaceCollaboratorId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type RemoveNamespaceCollaboratorInviteInput = {
+  inviteId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+export type RemovePackageCollaboratorInput = {
+  packageCollaboratorId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type RemovePackageCollaboratorInviteInput = {
+  inviteId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+
+export type RemovePackageTransferRequestInput = {
+  packageTransferRequestId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type RequestPackageTransferInput = {
+  packageId: Scalars['ID'];
+  newOwnerId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type RequestPasswordResetInput = {
+  email: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type RequestValidationEmailInput = {
+  /** The user id */
+  userId?: Maybe<Scalars['ID']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type RevokeApiTokenInput = {
+  /** The API token ID */
+  tokenId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export enum Role {
+  Admin = 'ADMIN',
+  Editor = 'EDITOR',
+  Viewer = 'VIEWER'
+}
+
+
+
+export enum SearchKind {
+  Package = 'PACKAGE',
+  Namespace = 'NAMESPACE',
+  User = 'USER'
+}
+
+export enum SearchOrderBy {
+  Alphabetically = 'ALPHABETICALLY',
+  Size = 'SIZE',
+  TotalDownloads = 'TOTAL_DOWNLOADS',
+  PublishedDate = 'PUBLISHED_DATE'
+}
+
+export enum SearchOrderSort {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
+
+export enum SearchPublishDate {
+  LastDay = 'LAST_DAY',
+  LastWeek = 'LAST_WEEK',
+  LastMonth = 'LAST_MONTH',
+  LastYear = 'LAST_YEAR'
+}
+
+
+export type SeePendingNotificationsInput = {
+  clientMutationId?: Maybe<Scalars['String']>;
+};
 
 
 
 
+export type SocialAuthJwtInput = {
+  provider: Scalars['String'];
+  accessToken: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
 
-export type VerifyInput = {
-  token: Scalars['String'];
+
+
+export type UnlikePackageInput = {
+  packageId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UnwatchPackageInput = {
+  packageId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdateNamespaceCollaboratorInviteRoleInput = {
+  namespaceCollaboratorInviteId: Scalars['ID'];
+  role: Role;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdateNamespaceCollaboratorRoleInput = {
+  namespaceCollaboratorId: Scalars['ID'];
+  role: Role;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdateNamespaceInput = {
+  namespaceId: Scalars['ID'];
+  /** The namespace slug name */
+  name?: Maybe<Scalars['String']>;
+  /** The namespace display name */
+  displayName?: Maybe<Scalars['String']>;
+  /** The namespace description */
+  description?: Maybe<Scalars['String']>;
+  /** The namespace avatar */
+  avatar?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdatePackageCollaboratorInviteRoleInput = {
+  packageCollaboratorInviteId: Scalars['ID'];
+  role: Role;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdatePackageCollaboratorRoleInput = {
+  packageCollaboratorId: Scalars['ID'];
+  role: Role;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdatePackageInput = {
+  packageId: Scalars['ID'];
+  /** The package icon */
+  icon?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdateUserInfoInput = {
+  /** The user id */
+  userId?: Maybe<Scalars['ID']>;
+  /** The user full name */
+  fullName?: Maybe<Scalars['String']>;
+  /** The user bio */
+  bio?: Maybe<Scalars['String']>;
+  /** The user avatar */
+  avatar?: Maybe<Scalars['String']>;
+  /** The user Twitter (it can be the url, or the handle with or without the @) */
+  twitter?: Maybe<Scalars['String']>;
+  /** The user Github (it can be the url, or the handle with or without the @) */
+  github?: Maybe<Scalars['String']>;
+  /** The user website (it must be a valid url) */
+  websiteUrl?: Maybe<Scalars['String']>;
+  /** The user location */
+  location?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export enum UserNotificationSeenState {
+  Unseen = 'UNSEEN',
+  Seen = 'SEEN',
+  SeenAndRead = 'SEEN_AND_READ'
+}
+
+export type ValidateUserEmailInput = {
+  /** The user id */
+  userId?: Maybe<Scalars['ID']>;
+  challenge: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type ValidateUserPasswordInput = {
+  password: Scalars['String'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+
+export type WatchPackageInput = {
+  packageId: Scalars['ID'];
   clientMutationId?: Maybe<Scalars['String']>;
 };
 
@@ -118,7 +505,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: Maybe<{ __typename?: 'ObtainJSONWebTokenPayload', refreshToken?: Maybe<string> }> };
+export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: Maybe<{ __typename?: 'ObtainJSONWebTokenPayload', refreshToken: string }> };
 
 
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokenAuth"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;

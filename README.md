@@ -42,3 +42,5 @@
 ## Output
 
 There is no output from this action
+## Development 
+- WAPM_USERNAME=a WAPM_PASSWORD=b npm run test

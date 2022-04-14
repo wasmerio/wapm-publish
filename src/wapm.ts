@@ -88,6 +88,37 @@ export const login = async (client: Client, username: string, password: string) 
   }
 };
 
+
+export const tokenLogin = async (client: Client, userToken: string) =>
+{
+  //Authenticate to WAPM
+  // const {data} = await client.mutate({
+  //   mutation: LoginTokenDocument,
+  //   variables: {
+  //     userToken
+  //   }
+  // });
+
+  //Extract the data
+  // const token = data!.tokenAuth!.refreshToken!;
+
+  //Hide the token from the logs
+  setSecret(userToken);
+
+  //Update the token
+  const exitCode = await exec('wapm', ['config', 'set', 'registry.token', userToken]);
+
+  //Ensure the child was successful
+  if (exitCode != 0)
+  {
+    //Fail the step
+    setFailed(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
+
+    //Crash
+    process.exit(1);
+  }
+};
+
 /**
  * Set WAPM Registry url
  * @param url WAPM registry url

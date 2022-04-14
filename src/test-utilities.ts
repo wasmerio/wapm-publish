@@ -19,7 +19,7 @@ export const loadEnv = (name: string) =>
   //If null, crash
   if (value == null || value.length == 0)
   {
-    throw new Error(`Environment variable ${name} not provided!`);
+    return ''
   }
   else
   {

@@ -6,12 +6,14 @@
 import test from 'ava';
 import {existsSync} from 'fs';
 import {getClient} from './apollo';
-import {getLocation, getRegistryUrl, login, publish, setRegistryUrl} from './wapm';
+import {getLocation, getRegistryUrl, login, publish, setRegistryUrl, tokenLogin} from './wapm';
 import {loadEnv, loggedIn, logout, resolveFixture} from './test-utilities';
-
+// WAPM_REGISTRY_TOKEN=wap_bcc06873de6ee1cbab3e1ca9144eef93923b74bb5a8c8c72189acb47e00a3622
 //Environment variables
 const username = loadEnv('WAPM_USERNAME');
 const password = loadEnv('WAPM_PASSWORD');
+const userToken = loadEnv('WAPM_REGISTRY_TOKEN');
+
 // We test on the dev registry by default
 const registry = process.env['WAPM_REGISTRY'] || "https://registry.wapm.dev";
 
@@ -55,42 +57,87 @@ test.serial('registry url', async ctx =>
   });
 });
 
-test('will login', async ctx =>
+if(userToken) {
+
+  test('will login with token', async ctx =>
 {
-  //Logout
-  logout();
+  // Logout
+  // logout();
 
   //Assert that it will not throw an error
   await ctx.notThrowsAsync(async () =>
   {
     const client = getClient(registry);
     //Login
-    await login(client, username, password);
+    await tokenLogin(client, userToken);
   });
 
   //Assert that we're logged in
   ctx.true(await loggedIn());
-
+  
   //Logout
-  logout();
+  // logout();
 });
 
-test('will publish', async ctx =>
-{
-  //Login
-  const client = getClient(registry);
-  await login(client, username, password);
-
-  //Get the fixture
-  const fixture = resolveFixture();
-
-  //Assert that it will not throw an error
-  await ctx.notThrowsAsync(async () =>
+  test('will publish with token', async ctx =>
   {
-    //Publish (Dry run)
-    await publish(fixture, true);
+    //Login
+    const client = getClient(registry);
+    await tokenLogin(client, userToken);
+  
+    //Get the fixture
+    const fixture = resolveFixture();
+  
+    //Assert that it will not throw an error
+    await ctx.notThrowsAsync(async () =>
+    {
+      //Publish (Dry run)
+      await publish(fixture, true);
+    });
+  
+    //Logout
+    // logout();
   });
+} else {
 
-  //Logout
-  logout();
-});
+  test('will login with username', async ctx =>
+  {
+    //Logout
+    logout();
+  
+    //Assert that it will not throw an error
+    await ctx.notThrowsAsync(async () =>
+    {
+      const client = getClient(registry);
+      //Login
+      await login(client, username, password);
+    });
+  
+    //Assert that we're logged in
+    ctx.true(await loggedIn());
+  
+    //Logout
+    logout();
+  });
+  
+  test('will publish with username', async ctx =>
+  {
+    //Login
+    const client = getClient(registry);
+    await login(client, username, password);
+  
+    //Get the fixture
+    const fixture = resolveFixture();
+  
+    //Assert that it will not throw an error
+    await ctx.notThrowsAsync(async () =>
+    {
+      //Publish (Dry run)
+      await publish(fixture, true);
+    });
+  
+    //Logout
+    logout();
+  });
+  
+}
