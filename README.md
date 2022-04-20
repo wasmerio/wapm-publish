@@ -33,9 +33,11 @@
 ## Input
 
 | Name        | Required | Description                                                   |
-| ----------- | -------- | ------------------------------------------------------------- |
+| ----------- | -------- | ------------------------------------------------------------  |
 | `username`  | ✅       | WAPM account username                                         |
 | `password`  | ✅       | WAPM account password                                         |
+|               OR       |                 
+| `token`     | ✅       | WAPM access token                                             |
 | `directory` | no       | Package directory (defaults to the current working directory) |
 | `registry`  | no       | The registry url (defaults to https://registry.wapm.io/)      |
 
