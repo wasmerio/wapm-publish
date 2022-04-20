@@ -28,6 +28,7 @@
   with:
     username: ${{ secrets.WAPM_USERNAME }}
     password: ${{ secrets.WAPM_PASSWORD }}
+    WAPM_REGISTRY_TOKEN: ${{ secrets.WAPM_REGISTRY_TOKEN }}
 ```
 
 ## Input
