@@ -20,17 +20,18 @@ const main = async () =>
       }
   // loginWithUsername()
 
+  const directory = getInput('directory') || process.cwd();
+    //Publish to WAPM
+    await publish(directory);
+    info(`Published the package located in ${directory}.`);
  
   //Exit
-  process.exit();
+  process.exit(1);
 };
 
 
 // login with username and password 
 const loginWithUsername = async (username: string, password: string) => {
-
-  
-    const directory = getInput('directory') != '' ? getInput('directory') : process.cwd();
   
     const registry = getInput('registry');
   
@@ -47,17 +48,11 @@ const loginWithUsername = async (username: string, password: string) => {
     //Login to WAPM
     await login(client, username, password);
     info('Logged in to WAPM.');
-  
-    //Publish to WAPM
-    await publish(directory);
-    info(`Published the package located in ${directory}.`);
+
   
 }
 
 const loginWithToken = async (userToken: string) => {
-
-  
-    const directory = getInput('directory') != '' ? getInput('directory') : process.cwd();
   
     const registry = getInput('registry');
   
@@ -73,10 +68,6 @@ const loginWithToken = async (userToken: string) => {
     //Login to WAPM
     await tokenLogin(client, userToken);
     info('Logged in to WAPM.');
-  
-    //Publish to WAPM
-    await publish(directory);
-    info(`Published the package located in ${directory}.`);
   
 }
 main().catch(error =>

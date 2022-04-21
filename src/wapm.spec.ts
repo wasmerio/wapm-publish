@@ -8,7 +8,6 @@ import {existsSync} from 'fs';
 import {getClient} from './apollo';
 import {getLocation, getRegistryUrl, login, publish, setRegistryUrl, tokenLogin} from './wapm';
 import {loadEnv, loggedIn, logout, resolveFixture} from './test-utilities';
-// WAPM_REGISTRY_TOKEN=wap_bcc06873de6ee1cbab3e1ca9144eef93923b74bb5a8c8c72189acb47e00a3622
 //Environment variables
 const username = loadEnv('WAPM_USERNAME');
 const password = loadEnv('WAPM_PASSWORD');

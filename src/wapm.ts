@@ -91,17 +91,6 @@ export const login = async (client: Client, username: string, password: string) 
 
 export const tokenLogin = async (client: Client, userToken: string) =>
 {
-  //Authenticate to WAPM
-  // const {data} = await client.mutate({
-  //   mutation: LoginTokenDocument,
-  //   variables: {
-  //     userToken
-  //   }
-  // });
-
-  //Extract the data
-  // const token = data!.tokenAuth!.refreshToken!;
-
   //Hide the token from the logs
   setSecret(userToken);
 
@@ -133,9 +122,6 @@ export const setRegistryUrl = async (url: string) =>
   {
     //Fail the step
     setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
-
-    //Crash
-    process.exit(1);
   }
 };
 
@@ -196,7 +182,5 @@ export const publish = async (directory: string, dryRun = false) =>
     //Fail the step
     setFailed(`Failed to publish to WAPM, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
 };
