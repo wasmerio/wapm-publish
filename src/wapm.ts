@@ -123,8 +123,6 @@ export const setRegistryUrl = async (url: string) =>
     //Fail the step
     setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
 };
 
