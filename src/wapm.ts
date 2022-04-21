@@ -24,7 +24,8 @@ export const getLocation = async () =>
     //Fail the step
     setFailed('Wasmer not detected!');
 
-
+    //Crash
+    process.exit(1);
   }
 
   //Resolve the location
