@@ -24,8 +24,7 @@ export const getLocation = async () =>
     //Fail the step
     setFailed('Wasmer not detected!');
 
-    //Crash
-    process.exit(1);
+
   }
 
   //Resolve the location
@@ -44,8 +43,6 @@ export const getLocation = async () =>
       //Fail the step
       setFailed(`Failed to create WAPM config, WAPM exited with ${exitCode}!`);
 
-      //Crash
-      process.exit(1);
     }
   }
 
@@ -82,9 +79,6 @@ export const login = async (client: Client, username: string, password: string) 
   {
     //Fail the step
     setFailed(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
-
-    //Crash
-    process.exit(1);
   }
 };
 
@@ -103,8 +97,6 @@ export const tokenLogin = async (client: Client, userToken: string) =>
     //Fail the step
     setFailed(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
 };
 
