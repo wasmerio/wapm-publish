@@ -44,6 +44,8 @@ export const getLocation = async () =>
       //Fail the step
       setFailed(`Failed to create WAPM config, WAPM exited with ${exitCode}!`);
 
+      //Crash
+      process.exit(1);
     }
   }
 
