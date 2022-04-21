@@ -153,8 +153,6 @@ export const getRegistryUrl = async (): Promise<string> =>
     //Fail the step
     setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
   
   return registryUrl;
@@ -185,7 +183,5 @@ export const publish = async (directory: string, dryRun = false) =>
     //Fail the step
     setFailed(`Failed to publish to WAPM, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
 };

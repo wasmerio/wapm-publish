@@ -26,7 +26,7 @@ const main = async () =>
     info(`Published the package located in ${directory}.`);
  
   //Exit
-  process.exit(1);
+  process.exit();
 };
 
 
