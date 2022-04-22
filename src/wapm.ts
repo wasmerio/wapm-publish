@@ -23,13 +23,10 @@ export const getLocation = async () =>
   {
     //Fail the step
     setFailed('Wasmer not detected!');
-
-    //Crash
-    process.exit(1);
-  }
+  } 
 
   //Resolve the location
-  const location = join(wasmerDir, 'wapm.toml');
+  const location = join(wasmerDir as string, 'wapm.toml');
 
   //Create the config if it doesn't exist
   if (!existsSync(location))
@@ -44,8 +41,6 @@ export const getLocation = async () =>
       //Fail the step
       setFailed(`Failed to create WAPM config, WAPM exited with ${exitCode}!`);
 
-      //Crash
-      process.exit(1);
     }
   }
 

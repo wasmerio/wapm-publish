@@ -9,21 +9,30 @@ import {login, publish, setRegistryUrl, tokenLogin} from './wapm';
 
 const main = async () =>
 {
-      //Get input
-      const username = getInput('username');
-      const password = getInput('password');
-      const userToken = getInput('token');
-      if(userToken) {
-        loginWithToken(userToken)
-      } else {
-        loginWithUsername(username, password)
-      }
+  //Get input
+  const username = getInput('username');
+  const password = getInput('password');
+  const userToken = getInput('token');
+  if(userToken) {
+    try {
+      loginWithToken(userToken)
+    } catch(err) {
+      process.exit(1)
+    }
+
+  } else {
+    try {
+      loginWithUsername(username, password)
+    } catch(err) {
+      process.exit(1)
+    } 
+  }
   // loginWithUsername()
 
   const directory = getInput('directory') || process.cwd();
-    //Publish to WAPM
-    await publish(directory);
-    info(`Published the package located in ${directory}.`);
+  //Publish to WAPM
+  await publish(directory);
+  info(`Published the package located in ${directory}.`);
  
   //Exit
   process.exit();
