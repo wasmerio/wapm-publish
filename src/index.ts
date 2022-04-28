@@ -14,18 +14,13 @@ const main = async () =>
   const password = getInput('password');
   const userToken = getInput('token');
   if(userToken) {
-    try {
-      loginWithToken(userToken)
-    } catch(err) {
-      process.exit(1)
-    }
+
+      await loginWithToken(userToken)
+  
 
   } else {
-    try {
-      loginWithUsername(username, password)
-    } catch(err) {
-      process.exit(1)
-    } 
+      await loginWithUsername(username, password)
+   
   }
   // loginWithUsername()
 
@@ -35,7 +30,7 @@ const main = async () =>
   info(`Published the package located in ${directory}.`);
  
   //Exit
-  process.exit();
+  process.exit(1);
 };
 
 

@@ -35,14 +35,14 @@
 
 | Name        | Required | Description                                                   |
 | ----------- | -------- | ------------------------------------------------------------  |
-| `username`  | ✅       | WAPM account username                                         |
-| `password`  | ✅       | WAPM account password                                         |
-|               OR       |                 
-| `token`     | ✅       | WAPM access token                                             |
+| `username`  | 〰️        | WAPM account username(Instead of the `token`)                                       |
+| `password`  | 〰️        | WAPM account password(Instead of the `token`)                                              |          
+| `token`     | 〰️        | WAPM access token(Instead of the `username`/`password`)                                         |
 | `directory` | no       | Package directory (defaults to the current working directory) |
 | `registry`  | no       | The registry url (defaults to https://registry.wapm.io/)      |
 
 ## Output
+
 
 There is no output from this action
 ## Development 
