@@ -34,4 +34,4 @@ jobs:
         env:
           WAPM_USERNAME: ${{ secrets.WAPM_DEV_USERNAME }}
           WAPM_PASSWORD: ${{ secrets.WAPM_DEV_PASSWORD }}
-          WAPM_REGISTRY_TOKEN: ${{ secrets.WAPM_REGISTRY_TOKEN }}
+          token: ${{ secrets.WAPM_REGISTRY_TOKEN }}

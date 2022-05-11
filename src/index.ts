@@ -14,13 +14,9 @@ const main = async () =>
   const password = getInput('password');
   const userToken = getInput('token');
   if(userToken) {
-
       await loginWithToken(userToken)
-  
-
   } else {
       await loginWithUsername(username, password)
-   
   }
   // loginWithUsername()
 

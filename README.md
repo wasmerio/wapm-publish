@@ -28,7 +28,7 @@
   with:
     username: ${{ secrets.WAPM_USERNAME }}
     password: ${{ secrets.WAPM_PASSWORD }}
-    WAPM_REGISTRY_TOKEN: ${{ secrets.WAPM_REGISTRY_TOKEN }}
+    token: ${{ secrets.WAPM_REGISTRY_TOKEN }}
 ```
 
 ## Input
@@ -46,4 +46,5 @@
 
 There is no output from this action
 ## Development 
-- WAPM_USERNAME=a WAPM_PASSWORD=b npm run test
+- WAPM_USERNAME=a WAPM_PASSWORD=b npm run test `In case of username & password`
+- token=token_value `In case of token`

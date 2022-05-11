@@ -11,7 +11,7 @@ import {loadEnv, loggedIn, logout, resolveFixture} from './test-utilities';
 //Environment variables
 const username = loadEnv('WAPM_USERNAME');
 const password = loadEnv('WAPM_PASSWORD');
-const userToken = loadEnv('WAPM_REGISTRY_TOKEN');
+const userToken = loadEnv('token');
 
 // We test on the dev registry by default
 const registry = process.env['WAPM_REGISTRY'] || "https://registry.wapm.dev";
