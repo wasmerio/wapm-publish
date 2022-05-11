@@ -23,13 +23,10 @@ export const getLocation = async () =>
   {
     //Fail the step
     setFailed('Wasmer not detected!');
-
-    //Crash
-    process.exit(1);
-  }
+  } 
 
   //Resolve the location
-  const location = join(wasmerDir, 'wapm.toml');
+  const location = join(wasmerDir as string, 'wapm.toml');
 
   //Create the config if it doesn't exist
   if (!existsSync(location))
@@ -44,8 +41,6 @@ export const getLocation = async () =>
       //Fail the step
       setFailed(`Failed to create WAPM config, WAPM exited with ${exitCode}!`);
 
-      //Crash
-      process.exit(1);
     }
   }
 
@@ -82,9 +77,24 @@ export const login = async (client: Client, username: string, password: string) 
   {
     //Fail the step
     setFailed(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
+  }
+};
 
-    //Crash
-    process.exit(1);
+
+export const tokenLogin = async (client: Client, userToken: string) =>
+{
+  //Hide the token from the logs
+  setSecret(userToken);
+
+  //Update the token
+  const exitCode = await exec('wapm', ['config', 'set', 'registry.token', userToken]);
+
+  //Ensure the child was successful
+  if (exitCode != 0)
+  {
+    //Fail the step
+    setFailed(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
+
   }
 };
 
@@ -103,8 +113,6 @@ export const setRegistryUrl = async (url: string) =>
     //Fail the step
     setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
 };
 
@@ -133,8 +141,6 @@ export const getRegistryUrl = async (): Promise<string> =>
     //Fail the step
     setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
   
   return registryUrl;
@@ -165,7 +171,5 @@ export const publish = async (directory: string, dryRun = false) =>
     //Fail the step
     setFailed(`Failed to publish to WAPM, WAPM exited with ${exitCode}!`);
 
-    //Crash
-    process.exit(1);
   }
 };
