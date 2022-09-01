@@ -32,13 +32,24 @@
 
 ## Input
 
-| Name        | Required | Description                                                   |
-| ----------- | -------- | ------------------------------------------------------------- |
-| `username`  | ✅       | WAPM account username                                         |
-| `password`  | ✅       | WAPM account password                                         |
-| `directory` | no       | Package directory (defaults to the current working directory) |
-| `registry`  | no       | The registry url (defaults to https://registry.wapm.io/)      |
+| Name        | Required | Description                                                        |
+| ----------- | -------- | ------------------------------------------------------------------ |
+| `token`     | 〰️       | WAPM account token                                                 |
+| `username`  | 〰️       | WAPM account username (will be used only if token is not provided) |
+| `password`  | 〰️       | WAPM access password (will be used only if token is not provided)  |
+| `directory` | no       | Package directory (defaults to the current working directory)      |
+| `registry`  | no       | The registry url (defaults to https://registry.wapm.io/)           |
 
 ## Output
 
 There is no output from this action
+
+
+## Development
+
+You can develop this action with npm and node:
+
+```bash
+npm i
+WAPM_USERNAME=x WAPM_PASSWORD=y WAPM_TOKEN=z npm test
+```

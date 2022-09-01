@@ -5,7 +5,7 @@
 //Imports
 import {execSync} from 'child_process';
 import {join} from 'path';
-import {setSecret} from '@actions/core';
+import {debug, setSecret} from '@actions/core';
 
 /**
  * Load an environment variable
@@ -38,7 +38,9 @@ export const loggedIn = () =>
   //Get auth state
   const state = execSync('wapm whoami', {
     encoding: 'utf-8'
-  });
+  }).trim();
+  debug(`User logged in: ${state}`);
+
   return !state.startsWith('(not logged in)');
 };
 

@@ -5,7 +5,7 @@
 //Imports
 import { Client } from './apollo';
 import {LoginDocument} from './graphql';
-import {debug, setFailed, setSecret} from '@actions/core';
+import {debug, setSecret} from '@actions/core';
 import {exec} from '@actions/exec';
 import {existsSync} from 'fs';
 import {join} from 'path';
@@ -22,10 +22,7 @@ export const getLocation = async () =>
   if (wasmerDir == null)
   {
     //Fail the step
-    setFailed('Wasmer not detected!');
-
-    //Crash
-    process.exit(1);
+    throw new Error('Wasmer not detected!');
   }
 
   //Resolve the location
@@ -42,10 +39,7 @@ export const getLocation = async () =>
     if (exitCode != 0)
     {
       //Fail the step
-      setFailed(`Failed to create WAPM config, WAPM exited with ${exitCode}!`);
-
-      //Crash
-      process.exit(1);
+      throw new Error(`Failed to create WAPM config, WAPM exited with ${exitCode}!`);
     }
   }
 
@@ -59,8 +53,10 @@ export const getLocation = async () =>
  */
 export const login = async (client: Client, username: string, password: string) =>
 {
+  debug("Set WAPM username/password");
+
   //Authenticate to WAPM
-  const {data} = await client.mutate({
+  const {data, errors} = await client.mutate({
     mutation: LoginDocument,
     variables: {
       username,
@@ -68,25 +64,42 @@ export const login = async (client: Client, username: string, password: string) 
     }
   });
 
+  if (errors) {
+    throw new Error(`GraphQL query failed with the errors: ${errors.map(e => e.message).join(", ")}`);
+  }
   //Extract the data
   const token = data!.tokenAuth!.refreshToken!;
 
   //Hide the token from the logs
   setSecret(token);
 
-  //Update the token
   const exitCode = await exec('wapm', ['config', 'set', 'registry.token', token]);
+  if (exitCode != 0)
+  {
+    //Fail the step
+    throw new Error(`Failed to set WAPM user token, WAPM exited with ${exitCode}!`);
+  }
+  // loginWithToken(token);
+
+};
+
+/**
+ * Set WAPM token
+ * @param token WAPM login token
+ */
+ export const loginWithToken = async (token: string) => {
+  debug("Set WAPM token");
+
+  //Update the token
+  const exitCode = await exec('wapm', ['login', token]);
 
   //Ensure the child was successful
   if (exitCode != 0)
   {
     //Fail the step
-    setFailed(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
-
-    //Crash
-    process.exit(1);
+    throw new Error(`Failed to set WAPM token, WAPM exited with ${exitCode}!`);
   }
-};
+}
 
 /**
  * Set WAPM Registry url
@@ -94,6 +107,8 @@ export const login = async (client: Client, username: string, password: string) 
  */
 export const setRegistryUrl = async (url: string) =>
 {
+  debug(`Set registry url: ${url}`);
+
   //Update the registry url
   const exitCode = await exec('wapm', ['config', 'set', 'registry.url', url]);
 
@@ -101,10 +116,7 @@ export const setRegistryUrl = async (url: string) =>
   if (exitCode != 0)
   {
     //Fail the step
-    setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
-
-    //Crash
-    process.exit(1);
+    throw new Error(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
   }
 };
 
@@ -131,13 +143,10 @@ export const getRegistryUrl = async (): Promise<string> =>
   if (exitCode != 0)
   {
     //Fail the step
-    setFailed(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
-
-    //Crash
-    process.exit(1);
+    throw new Error(`Failed to set WAPM the registry url, WAPM exited with ${exitCode}!`);
   }
   
-  return registryUrl;
+  return registryUrl.trim();
 };
 
 /**
@@ -146,6 +155,8 @@ export const getRegistryUrl = async (): Promise<string> =>
  */
 export const publish = async (directory: string, dryRun = false) =>
 {
+  debug(`Publish: ${directory}${dryRun?" (dry run)": ""}`);
+
   //Generate arguments
   const args = ['publish'];
 
@@ -163,9 +174,6 @@ export const publish = async (directory: string, dryRun = false) =>
   if (exitCode != 0)
   {
     //Fail the step
-    setFailed(`Failed to publish to WAPM, WAPM exited with ${exitCode}!`);
-
-    //Crash
-    process.exit(1);
+    throw new Error(`Failed to publish to WAPM, WAPM exited with ${exitCode}!`);
   }
 };
