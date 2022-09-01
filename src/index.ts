@@ -3,28 +3,16 @@
  */
 
 //Imports
-import {getInput, info, setSecret} from '@actions/core';
+import {getInput, info, setSecret, setFailed} from '@actions/core';
 import getClient from './apollo';
-import {login, publish, setRegistryUrl} from './wapm';
+import {login, loginWithToken, publish, setRegistryUrl} from './wapm';
 
 const main = async () =>
 {
-  //Get input
-  const username = getInput('username', {
-    required: true
-  });
-
-  const password = getInput('password', {
-    required: true
-  });
-
   const directory = getInput('directory') != '' ? getInput('directory') : process.cwd();
 
   const registry = getInput('registry');
 
-  //Hide credentials from the logs
-  setSecret(username);
-  setSecret(password);
 
   //Get the Apollo client
   if (registry) {
@@ -32,8 +20,29 @@ const main = async () =>
   }
   const client = getClient(registry);
 
+
+  //Get input
+  const token = getInput('token');
+  setSecret(token);
+
+  if (token) {
+    await loginWithToken(token);
+  }
+  else {
+    const username = getInput('username', {
+      required: true
+    });
+
+    const password = getInput('password', {
+      required: true
+    });
+    //Hide credentials from the logs
+    setSecret(username);
+    setSecret(password);
+    await login(client, username, password);
+  }
+
   //Login to WAPM
-  await login(client, username, password);
   info('Logged in to WAPM.');
 
   //Publish to WAPM
@@ -44,7 +53,9 @@ const main = async () =>
   process.exit();
 };
 
-main().catch(error =>
+main().catch((error: Error) =>
 {
-  throw error;
+  setFailed(error);
+  process.exit(1);
+
 });

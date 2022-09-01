@@ -41,12 +41,6 @@ export const getClient = (registryUrl: string): Client => {
         }
       }
       endGroup();
-
-      //Fail the step
-      setFailed("GraphQL request failed!");
-
-      //Crash
-      process.exit(1);
     }
   });
 

@@ -24,13 +24,14 @@ jobs:
           push: false
           tags: wasmer/wapm-publish
 
-      # Run the Docker image
+      # Run the Docker image (username/password tests)
       - name: Run the Docker image
         uses: addnab/docker-run-action@v3
         with:
           image: wasmer/wapm-publish
-          options: -e WAPM_USERNAME -e WAPM_PASSWORD
+          options: -e WAPM_TOKEN -e WAPM_USERNAME -e WAPM_PASSWORD
           run: npm run test
         env:
+          WAPM_TOKEN: ${{ secrets.WAPM_DEV_TOKEN }}
           WAPM_USERNAME: ${{ secrets.WAPM_DEV_USERNAME }}
           WAPM_PASSWORD: ${{ secrets.WAPM_DEV_PASSWORD }}
