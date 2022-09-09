@@ -28,6 +28,8 @@
   with:
     username: ${{ secrets.WAPM_USERNAME }}
     password: ${{ secrets.WAPM_PASSWORD }}
+    # OR with a token that you can generate from https://wapm.io/settings/access-tokens
+    token: ${{ secrets.WAPM_TOKEN }}
 ```
 
 ## Input
