@@ -8,12 +8,15 @@ runs:
   using: node12
   main: dist/index.js
 inputs:
+  token:
+    description: WAPM token (https://wapm.io/settings/access-tokens)
+    required: false
   username:
     description: WAPM account username
-    required: true
+    required: false
   password:
     description: WAPM account password
-    required: true
+    required: false
   directory:
     description: Package directory (Defaults to the current working directory)
     required: false
